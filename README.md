@@ -1,4 +1,4 @@
-Pull the project, do maven update and run the project.<br>
+Pull the project, do maven update and run the application.<br>
 
 Use the below end point.<br>
 
