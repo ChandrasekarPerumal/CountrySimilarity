@@ -20,11 +20,15 @@ public class CountrySimilarityController {
 
 	@GetMapping("/get/")
 	public ResponseEntity<?> getBorderCountriesSimilarity(@RequestParam String name) {
-		
-		if(name.length()<3) {
+
+		if (name == null) {
 			return new ResponseEntity<>("Enter valid country name", HttpStatus.BAD_REQUEST);
 		}
-		
+
+		if (name.length() < 3) {
+			return new ResponseEntity<>("Enter valid country name", HttpStatus.BAD_REQUEST);
+		}
+
 		try {
 			Country country = countrySimilarity.getSimilarities(name);
 			if (country != null) {
