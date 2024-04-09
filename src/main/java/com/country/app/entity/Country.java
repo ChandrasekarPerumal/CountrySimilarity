@@ -25,4 +25,11 @@ public class Country {
 		this.requestedCountryName = requestedCountryName;
 	}
 
+	@Override
+	public String toString() {
+		return "Country [requestedCountryName=" + requestedCountryName + ", borderCountries=" + borderCountries + "]";
+	}
+	
+	
+
 }

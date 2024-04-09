@@ -16,14 +16,14 @@ import com.country.app.entity.Country;
 import com.country.app.helper.DistanceBtwnCountries;
 
 @Service
-public class CountrySimilarityImpl implements CountrySimilarity {
+public class CountrySimilarityServiceImpl implements CountrySimilarityService {
 
 	private JSONParser jsonParser = new JSONParser();
 
 	private final RestTemplate restTemplate;
 
 	@Autowired
-	public CountrySimilarityImpl(RestTemplateBuilder builder) {
+	public CountrySimilarityServiceImpl(RestTemplateBuilder builder) {
 		this.restTemplate = builder.build();
 	}
 
@@ -31,11 +31,11 @@ public class CountrySimilarityImpl implements CountrySimilarity {
 
 	public Country getSimilarities(String name) {
 
+		System.out.println("Get - Sim:" + name);
 		Country country = new Country(); // Response object
 		BorderCountry borderCountry = new BorderCountry();// Object for border-country
 		JSONArray bordersCountryCode = null;
 		JSONObject jsonCountry = null;
-		JSONObject language = null;
 		JSONArray latLong = null;
 
 		List<String> languageCode = new ArrayList<>(); // List of language code
@@ -77,18 +77,18 @@ public class CountrySimilarityImpl implements CountrySimilarity {
 				}
 
 				country.setRequestedCountryName(name);
-
 				JSONObject lang = (JSONObject) jsonCountry.get("languages");
-				List<String> langCode = new ArrayList<>();
+
 				for (Object o : lang.keySet()) {
-					langCode.add(o.toString());
+					languageCode.add(o.toString());
 				}
 				// List of border countries code
 				bordersCountryCode = (JSONArray) jsonCountry.get("borders");
 
 				if (bordersCountryCode != null) {
 					// get border countries information
-					borderCountryInformation = getBorderCountriesDetails(bordersCountryCode, langCode, borderCountry);
+					borderCountryInformation = getBorderCountriesDetails(bordersCountryCode, languageCode,
+							borderCountry);
 					if (borderCountryInformation.size() > 0)
 						country.setBorderCountries(borderCountryInformation);
 					else
@@ -152,7 +152,6 @@ public class CountrySimilarityImpl implements CountrySimilarity {
 				String commonName = nameObject.get("common").toString();
 				borderCountry.setCountryName(commonName);
 
-				
 				// Has Freedom or Not
 				String independent = country.get("independent").toString();
 				if (independent.equalsIgnoreCase(borderCountry2.getIndependent())) {

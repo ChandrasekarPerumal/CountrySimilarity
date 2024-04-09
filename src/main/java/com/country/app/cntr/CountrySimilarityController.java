@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.country.app.entity.Country;
-import com.country.app.service.CountrySimilarity;
+import com.country.app.service.CountrySimilarityService;
 
 @RestController
 @RequestMapping("/api/v1/country")
 public class CountrySimilarityController {
 
 	@Autowired
-	private CountrySimilarity countrySimilarity;
+	private CountrySimilarityService countrySimilarity;
 
 	@GetMapping("/get/")
 	public ResponseEntity<?> getBorderCountriesSimilarity(@RequestParam String name) {
 
-		if (name == null) {
+		if (name == null || name.isEmpty()) {
 			return new ResponseEntity<>("Enter valid country name", HttpStatus.BAD_REQUEST);
 		}
 

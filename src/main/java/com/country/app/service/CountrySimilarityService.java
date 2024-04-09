@@ -7,7 +7,7 @@ import org.json.simple.JSONArray;
 import com.country.app.entity.BorderCountry;
 import com.country.app.entity.Country;
 
-public interface CountrySimilarity {
+public interface CountrySimilarityService {
 
 	String urlForName = "https://restcountries.com/v3.1/name/";
 	String urlForCode = "https://restcountries.com/v3.1/alpha/";
